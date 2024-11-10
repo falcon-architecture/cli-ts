@@ -1,6 +1,6 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
-import { CommandBuilder } from './core';
+import { CommandBuilder } from './commandBuilder';
 
 CommandBuilder.new()
     .setName("do")

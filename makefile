@@ -1,6 +1,8 @@
 build:
 	tsc
 
+link: build
+	npm link
 run:
 	ts-node src/cli.ts --help
 

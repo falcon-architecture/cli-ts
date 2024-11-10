@@ -1,10 +1,10 @@
 {
   "name": "@natarajanganapathi/falcon-cli",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "description": "",
-  "main": "src/cli.ts",
+  "main": "dist/index.js",
   "bin": {
-    "do": "src/cli.ts"
+    "do": "dist/cli.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "ts-node ./src/cli.ts init"
+    "test": "ts-node ./dist/cli.js init"
   },
   "author": "Natarajan Ganapathi",
   "license": "MIT",
