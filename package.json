@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "ts-node ./dist/cli.js init"
+    "test": "node ./dist/cli.js --help"
   },
   "author": "Natarajan Ganapathi",
   "license": "MIT",
