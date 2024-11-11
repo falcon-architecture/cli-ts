@@ -2,11 +2,13 @@ import { readFileSync, existsSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import inquirer, { Answers, DistinctQuestion } from 'inquirer';
 import axios, { AxiosRequestConfig } from 'axios';
+import { createLogger, format, transports } from 'winston';
+const { combine, timestamp, printf, splat, colorize } = format;
 
 export class Common {
     public get cwd(): string { return process.cwd(); }
 
-    public getPath(path: string): string {
+    public getAbsolutePath(path: string): string {
         return join(this.cwd, path);
     }
     public exists(path: string): boolean {

@@ -7,21 +7,48 @@
 5. File Read/Write
 6. Read Env variables
 
-## 1.1 Usage
+## 1.1 cli.ts file Usage
 
 ```typescript
-#!/usr/bin/env ts-node
 
-import { CommandBuilder } from '@cli/core';
-import { commands } from './commands'; // Ref: 1.2
+#!/usr/bin/env node
+
+import { CommandBuilder } from './commandBuilder';
+import { LoggerBuilder } from './loggerBuilder';
+import winston from 'winston';
+
+global.loggerBuilder = LoggerBuilder.new()
+    .addTransport(
+        new winston.transports.Console({
+            format: LoggerBuilder.consoleFormat()
+        }),
+        new winston.transports.File({
+            filename: 'logs/cli.log',
+            level: 'info',
+            format: LoggerBuilder.fileFormat()
+        })
+    )
+    .setLevel('debug')
+    .setColors({
+        fatal: 'red',
+        error: 'red',
+        warn: 'yellow',
+        info: 'green',
+        debug: 'blue',
+        trace: 'magenta'
+    });
 
 CommandBuilder.new()
     .setName("do")
-    .setDescription("A CLI application for poly repo management")
+    .setDescription("A CLI application framework")
     .setVersion("1.0.0")
-    .addSubCommands(...commands)
     .build()
+    .action(() => {
+        let logger = global.loggerBuilder.build();
+        logger.info('Success info!');
+    })
     .parse(process.argv);
+
 ```
 
 ## 1.2 Export your commands

@@ -1,7 +1,10 @@
 import { Command } from 'commander';
+import { Logger } from 'winston';
 import { Common } from './common';
+import { ICliConfig } from './cliConfig';
 
 export abstract class AbstractCommand extends Common {
+    private _logger?: Logger;
     public subCommands: AbstractCommand[] = [];
     public command: Command;
 
@@ -45,5 +48,38 @@ export abstract class AbstractCommand extends Common {
 
     public help(): void {
         this.command.help();
+    }
+
+    public config<T extends ICliConfig>(): T {
+        let path = this.configFilePath;
+        if (!this.exists(path)) {
+            throw new Error(`Config file not found: ${path}`);
+        }
+        return this.readJson<T>(path);
+    }
+
+    public get configFilePath(): string {
+        let rootCommandName = this.rootCommand.name();
+        let fileName = `${rootCommandName}.config.json`;
+        let path = this.getAbsolutePath(fileName);
+        return path;
+    }
+
+    public get rootCommand(): Command {
+        let currentCommand = this.command;
+        while (currentCommand.parent !== null) {
+            currentCommand = currentCommand.parent;
+        }
+        return currentCommand;
+    }
+
+    public get logger(): any {
+        if (!this._logger) {
+            let logLevel: 'trace' | 'info' = this.rootCommand.opts().verbose ? 'trace' : 'info';
+            this._logger = global.loggerBuilder
+                .setLevel(logLevel)
+                .build();
+        }
+        return this._logger;
     }
 }
