@@ -20,16 +20,16 @@ export abstract class AbstractCommand extends Common {
 
     private async execute(...args: any[]): Promise<void> {
         const startTime = new Date();
-        console.log(`executing ${this.constructor.name}...`);
+        this.logger.silly(`executing ${this.constructor.name}...`);
         try {
             await this.run(...args);
         }
         catch (err: any) {
-            console.error(err.message);
+            this.logger.error(err.message);
         }
         const endTime = new Date();
-        console.log(`executing ${this.constructor.name} completed`);
-        console.log('Execution duration:', endTime.getTime() - startTime.getTime(), 'ms');
+        this.logger.silly(`executing ${this.constructor.name} completed`);
+        this.logger.info('Execution duration:', endTime.getTime() - startTime.getTime(), 'ms');
     };
 
     public addSubCommands<T extends AbstractCommand>(...ctors: (new (...args: any[]) => T)[]): void {
@@ -43,7 +43,9 @@ export abstract class AbstractCommand extends Common {
     }
 
     private createSubCommand<T>(ctor: new (...args: ConstructorParameters<any>) => T, ...args: ConstructorParameters<any>): T {
-        return new ctor(...args);
+        let cmd = new ctor(...args);
+        this.logger.debug(`sub command ${ctor.constructor.name} is created`);
+        return cmd;
     }
 
     public help(): void {
@@ -58,6 +60,7 @@ export abstract class AbstractCommand extends Common {
             throw new Error(`It is already initialized.`);
         }
         this.writeJson(path, config);
+        this.logger.debug(`config file is initialized at ${path}`);
     }
     public updateConfig<T extends ICliConfig>(config: T): void {
         let path = this.configFilePath;
@@ -65,6 +68,7 @@ export abstract class AbstractCommand extends Common {
             throw new Error(`It is not initialized. Run init command first`);
         }
         this.writeJson(path, config);
+        this.logger.debug(`config file is updated at ${path}`);
     }
 
     public config<T extends ICliConfig>(): T {
@@ -72,6 +76,7 @@ export abstract class AbstractCommand extends Common {
         if (!this.exists(path)) {
             throw new Error(`It is not initialized. Run init command first`);
         }
+        this.logger.debug(`config file is read from ${path}`);
         return this.readJson<T>(path);
     }
 
@@ -100,5 +105,4 @@ export abstract class AbstractCommand extends Common {
         }
         return this._logger;
     }
-    // what are the api I still need to implement? list to be implement names only.
 }
