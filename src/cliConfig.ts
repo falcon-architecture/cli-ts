@@ -1,4 +1,4 @@
 export interface ICliConfig {
     name: string;
-    version: string;
+    version?: string;
 }

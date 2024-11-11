@@ -2,8 +2,6 @@ import { readFileSync, existsSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import inquirer, { Answers, DistinctQuestion } from 'inquirer';
 import axios, { AxiosRequestConfig } from 'axios';
-import { createLogger, format, transports } from 'winston';
-const { combine, timestamp, printf, splat, colorize } = format;
 
 export class Common {
     public get cwd(): string { return process.cwd(); }

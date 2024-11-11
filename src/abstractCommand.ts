@@ -50,10 +50,27 @@ export abstract class AbstractCommand extends Common {
         this.command.help();
     }
 
+    public initConfig<T extends ICliConfig>(config: T): void {
+        config.name = this.rootCommand.name();
+        config.version = this.rootCommand.version();
+        let path = this.configFilePath;
+        if (this.exists(path)) {
+            throw new Error(`It is already initialized.`);
+        }
+        this.writeJson(path, config);
+    }
+    public updateConfig<T extends ICliConfig>(config: T): void {
+        let path = this.configFilePath;
+        if (!this.exists(path)) {
+            throw new Error(`It is not initialized. Run init command first`);
+        }
+        this.writeJson(path, config);
+    }
+
     public config<T extends ICliConfig>(): T {
         let path = this.configFilePath;
         if (!this.exists(path)) {
-            throw new Error(`Config file not found: ${path}`);
+            throw new Error(`It is not initialized. Run init command first`);
         }
         return this.readJson<T>(path);
     }
@@ -62,6 +79,7 @@ export abstract class AbstractCommand extends Common {
         let rootCommandName = this.rootCommand.name();
         let fileName = `${rootCommandName}.config.json`;
         let path = this.getAbsolutePath(fileName);
+        this.logger.silly(`config file path: ${path}`);
         return path;
     }
 
@@ -73,7 +91,7 @@ export abstract class AbstractCommand extends Common {
         return currentCommand;
     }
 
-    public get logger(): any {
+    public get logger(): Logger {
         if (!this._logger) {
             let logLevel: 'trace' | 'info' = this.rootCommand.opts().verbose ? 'trace' : 'info';
             this._logger = global.loggerBuilder
@@ -82,4 +100,5 @@ export abstract class AbstractCommand extends Common {
         }
         return this._logger;
     }
+    // what are the api I still need to implement? list to be implement names only.
 }
