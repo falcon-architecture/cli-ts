@@ -5,3 +5,4 @@ src
 .gitignore
 makefile
 tsconfig.json
+logs

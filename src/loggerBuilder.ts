@@ -4,7 +4,6 @@ const { combine, timestamp, printf, colorize } = format;
 
 export class LoggerBuilder {
     private _transports: TransportStream[] = [];
-    private _format: Logform.Format = LoggerBuilder.consoleFormat();
     private _level: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace' = 'info';
 
     public static new(): LoggerBuilder {
@@ -25,17 +24,12 @@ export class LoggerBuilder {
             LoggerBuilder.logFormat
         );
     }
-    private static logFormat = printf(({ level, message, timestamp }) => {
+    private static readonly logFormat = printf(({ level, message, timestamp }) => {
         return `${timestamp} [${level}]: ${message}`;
     });
 
     public addTransport(...transport: TransportStream[]): this {
         this._transports = transport;
-        return this;
-    }
-
-    public addFormat(format: Logform.Format): this {
-        this._format = format;
         return this;
     }
 

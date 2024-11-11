@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "node ./dist/cli.js --help"
+    "test": "node ./dist/cli.js"
   },
   "author": "Natarajan Ganapathi",
   "license": "MIT",
