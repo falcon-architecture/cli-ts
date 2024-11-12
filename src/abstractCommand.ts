@@ -29,7 +29,7 @@ export abstract class AbstractCommand extends Common {
         }
         const endTime = new Date();
         this.logger.silly(`executing ${this.constructor.name} completed`);
-        this.logger.info('Execution duration:', endTime.getTime() - startTime.getTime(), 'ms');
+        this.logger.info(`Execution duration: ${endTime.getTime() - startTime.getTime()} ms`);
     };
 
     public addSubCommands<T extends AbstractCommand>(...ctors: (new (...args: any[]) => T)[]): void {
@@ -102,6 +102,7 @@ export abstract class AbstractCommand extends Common {
             this._logger = global.loggerBuilder
                 .setLevel(logLevel)
                 .build();
+            this._logger.silly(`logger is initialized in ${logLevel} mode`);
         }
         return this._logger;
     }

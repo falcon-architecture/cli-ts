@@ -12,9 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/cli.ts",
-            "args": [
-                ""
-            ],
+            "args": [],
             "runtimeArgs": [
                 "-r",
                 "ts-node/register"

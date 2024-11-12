@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-import { CommandBuilder } from './commandBuilder';
+import { CommandBuilder } from './';
 
 CommandBuilder.new()
-    .setName("do")
+    .setName(global.packageJson.name)
     .setDescription("A CLI application framework")
-    .setVersion("1.0.0")
+    .setVersion(global.packageJson.version)
     .build()
     .action(() => {
         let logger = global.loggerBuilder.build();
