@@ -1,28 +1,22 @@
 import { config } from 'dotenv';
 config();
-import { LoggerBuilder } from './loggerBuilder';
+
 import winston from 'winston';
 import { resolve } from 'path';
 import { readFileSync, existsSync } from 'fs';
+import { EntityManager } from 'typeorm';
+
+import { LoggerBuilder } from './loggerBuilder';
+import { OrmBuilder } from './typeorm/ormBuilder';
 
 declare global {
     var loggerBuilder: LoggerBuilder;
     var packageJson: any;
+    var ormBuilder: OrmBuilder;
 }
 
 global.loggerBuilder = LoggerBuilder.new()
-    .addTransport(
-        new winston.transports.Console({
-            format: LoggerBuilder.consoleFormat()
-        }),
-        new winston.transports.File({
-            filename: 'logs/cli.log',
-            level: 'info',
-            format: LoggerBuilder.fileFormat()
-        })
-    )
-    .setLevel('debug')
-    .setColors({
+    .colors({
         fatal: 'red',
         error: 'red',
         warn: 'yellow',
@@ -30,6 +24,8 @@ global.loggerBuilder = LoggerBuilder.new()
         debug: 'blue',
         trace: 'magenta'
     });
+
+global.ormBuilder = OrmBuilder.new();
 
 var getParentDir = (dir?: string): string => resolve(dir ?? __dirname, '..');
 var findPackageJsonPath = (): string => {

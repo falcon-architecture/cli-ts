@@ -11,22 +11,22 @@ export class CommandBuilder {
         return new CommandBuilder();
     }
 
-    public setName(name: string): this {
+    public name(name: string): this {
         this._name = name;
         return this;
     }
 
-    public setDescription(description: string): this {
+    public description(description: string): this {
         this._description = description;
         return this;
     }
 
-    public setVersion(version: string): this {
+    public version(version: string): this {
         this._version = version;
         return this;
     }
 
-    public addSubCommands(...ctors: (new (...args: any[]) => AbstractCommand)[]): this {
+    public subCommands(...ctors: (new (...args: any[]) => AbstractCommand)[]): this {
         this._subCommands = ctors;
         return this;
     }

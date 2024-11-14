@@ -6,6 +6,7 @@
 4. Http Request Handling
 5. File Read/Write
 6. Read Env variables
+7. SQLite integration using TypeOrm
 
 ## 1.1 cli.ts file Usage
 

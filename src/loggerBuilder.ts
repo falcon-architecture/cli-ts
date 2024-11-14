@@ -3,7 +3,16 @@ import * as TransportStream from 'winston-transport';
 const { combine, timestamp, printf, colorize } = format;
 
 export class LoggerBuilder {
-    private _transports: TransportStream[] = [];
+    private _transports: TransportStream[] = [
+        new winston.transports.Console({
+            format: LoggerBuilder.consoleFormat()
+        }),
+        new winston.transports.File({
+            filename: 'logs/cli.log',
+            level: 'info',
+            format: LoggerBuilder.fileFormat()
+        })
+    ];
     private _level: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace' = 'info';
 
     public static new(): LoggerBuilder {
@@ -28,17 +37,17 @@ export class LoggerBuilder {
         return `${timestamp} [${level}]: ${message}`;
     });
 
-    public addTransport(...transport: TransportStream[]): this {
+    public transport(...transport: TransportStream[]): this {
         this._transports = transport;
         return this;
     }
 
-    public setLevel(level: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace'): this {
+    public level(level: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace'): this {
         this._level = level;
         return this;
     }
 
-    public setColors(colors: { [key: string]: string }): this {
+    public colors(colors: { [key: string]: string }): this {
         winston.addColors(colors);
         return this;
     }
