@@ -2,6 +2,7 @@ import { readFileSync, existsSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import inquirer, { Answers, DistinctQuestion } from 'inquirer';
 import axios, { AxiosRequestConfig } from 'axios';
+import { compile } from 'handlebars';
 
 export class Common {
     public get cwd(): string { return process.cwd(); }
@@ -35,5 +36,14 @@ export class Common {
     public async request<T>(config: AxiosRequestConfig): Promise<T> {
         let response = await axios.request<T>(config);
         return response.data;
+    }
+
+    public compileTemplate(template: string, data: any): string {
+        return compile(template)(data);
+    }
+
+    public compileTemplateFile(path: string, data: any): string {
+        let template = this.readFile(path);
+        return this.compileTemplate(template, data);
     }
 }

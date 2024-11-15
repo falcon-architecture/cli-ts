@@ -1,13 +1,11 @@
 import { config } from 'dotenv';
 config();
 
-import winston from 'winston';
 import { resolve } from 'path';
 import { readFileSync, existsSync } from 'fs';
-import { EntityManager } from 'typeorm';
 
-import { LoggerBuilder } from './loggerBuilder';
-import { OrmBuilder } from './typeorm/ormBuilder';
+import { LoggerBuilder } from './logger/loggerBuilder';
+import { OrmBuilder } from './orm/ormBuilder';
 
 declare global {
     var loggerBuilder: LoggerBuilder;

@@ -3,9 +3,9 @@
 import { CommandBuilder } from './';
 
 CommandBuilder.new()
-    .setName(global.packageJson.name)
-    .setDescription("A CLI application framework")
-    .setVersion(global.packageJson.version)
+    .name(global.packageJson.name)
+    .description("A CLI application framework")
+    .version(global.packageJson.version)
     .build()
     .action(() => {
         let logger = global.loggerBuilder.build();

@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import { Logger } from 'winston';
 import { Common } from './common';
-import { ICliConfig } from './cliConfig';
+import { ICliConfig } from '../cliConfig';
 
 export abstract class AbstractCommand extends Common {
     private _logger?: Logger;
@@ -100,7 +100,7 @@ export abstract class AbstractCommand extends Common {
         if (!this._logger) {
             let logLevel: 'trace' | 'info' = this.rootCommand.opts().verbose ? 'trace' : 'info';
             this._logger = global.loggerBuilder
-                .setLevel(logLevel)
+                .level(logLevel)
                 .build();
             this._logger.silly(`logger is initialized in ${logLevel} mode`);
         }
