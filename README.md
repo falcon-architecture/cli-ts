@@ -1,12 +1,13 @@
 # Falcon Command Line Interface
 
-1. Commands
+1. Commands with parameter documentation
 2. Prompts
 3. Logger
 4. Http Request Handling
 5. File Read/Write
 6. Read Env variables
 7. SQLite integration using TypeOrm
+8. Handlebar template process
 
 ## 1.1 cli.ts file Usage
 
