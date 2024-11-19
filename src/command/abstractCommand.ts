@@ -53,22 +53,23 @@ export abstract class AbstractCommand extends Common {
     }
 
     public initConfig<T extends ICliConfig>(config: T): void {
+        if (this.isConfigInitialized) {
+            throw new Error(`Command is already initialized. Run with --force to reinitialize`);
+        }
         config.name = this.rootCommand.name();
         config.version = this.rootCommand.version();
         let path = this.configFilePath;
-        if (this.exists(path)) {
-            throw new Error(`It is already initialized.`);
-        }
         this.writeJson(path, config);
         this.logger.debug(`config file is initialized at ${path}`);
     }
     public updateConfig<T extends ICliConfig>(config: T): void {
-        let path = this.configFilePath;
-        if (!this.exists(path)) {
-            throw new Error(`It is not initialized. Run init command first`);
-        }
-        this.writeJson(path, config);
-        this.logger.debug(`config file is updated at ${path}`);
+        let updateConfig = { ...this.config(), ...config };
+        this.writeJson(this.configFilePath, updateConfig);
+        this.logger.debug(`config file is updated at ${this.configFilePath}`);
+    }
+
+    public get isConfigInitialized(): boolean {
+        return this.exists(this.configFilePath);
     }
 
     public config<T extends ICliConfig>(): T {
