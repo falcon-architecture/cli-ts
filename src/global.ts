@@ -4,26 +4,14 @@ config();
 import { resolve } from 'path';
 import { readFileSync, existsSync } from 'fs';
 
-import { LoggerBuilder } from './logger/loggerBuilder';
-import { OrmBuilder } from './orm/ormBuilder';
+import { LoggerBuilder } from './logger';
+import { DataSourceOptionsBuilder } from './orm';
 
 declare global {
     var loggerBuilder: LoggerBuilder;
     var packageJson: any;
-    var ormBuilder: OrmBuilder;
+    var ormBuilder: DataSourceOptionsBuilder;
 }
-
-global.loggerBuilder = LoggerBuilder.new()
-    .colors({
-        fatal: 'red',
-        error: 'red',
-        warn: 'yellow',
-        info: 'green',
-        debug: 'blue',
-        trace: 'magenta'
-    });
-
-global.ormBuilder = OrmBuilder.new();
 
 var getParentDir = (dir?: string): string => resolve(dir ?? __dirname, '..');
 var findPackageJsonPath = (): string => {
