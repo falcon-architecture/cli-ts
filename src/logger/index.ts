@@ -9,3 +9,4 @@ global.loggerBuilder = LoggerBuilder.new()
         trace: 'magenta'
     });
 export * from './loggerBuilder';
+export { Logger } from 'winston';

@@ -4,7 +4,6 @@ import { Common } from './common';
 import { ICliConfig } from '../cliConfig';
 
 export abstract class AbstractCommand extends Common {
-    private _logger?: Logger;
     public subCommands: AbstractCommand[] = [];
     public command: Command;
 
@@ -44,7 +43,6 @@ export abstract class AbstractCommand extends Common {
 
     private createSubCommand<T>(ctor: new (...args: ConstructorParameters<any>) => T, ...args: ConstructorParameters<any>): T {
         let cmd = new ctor(...args);
-        this.logger.debug(`sub command ${ctor.constructor.name} is created`);
         return cmd;
     }
 
@@ -98,13 +96,13 @@ export abstract class AbstractCommand extends Common {
     }
 
     public get logger(): Logger {
-        if (!this._logger) {
+        if (!global.logger) {
             let logLevel: 'trace' | 'info' = this.rootCommand.opts().verbose ? 'trace' : 'info';
-            this._logger = global.loggerBuilder
+            global.logger = global.loggerBuilder
                 .level(logLevel)
                 .build();
-            this._logger.silly(`logger is initialized in ${logLevel} mode`);
+            global.logger.debug(`logger is initialized in ${logLevel} mode`);
         }
-        return this._logger;
+        return global.logger;
     }
 }

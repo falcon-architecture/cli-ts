@@ -36,7 +36,7 @@ export class CommandBuilder {
             .name(this._name)
             .description(this._description)
             .version(this._version)
-            .option('-v, --verbose', 'enable verbose logging');
+            .option('-v, --verbose', 'enable verbose mode');
         this._subCommands.forEach(ctor => new ctor(command));
         return command;
     }

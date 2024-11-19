@@ -4,11 +4,12 @@ config();
 import { resolve } from 'path';
 import { readFileSync, existsSync } from 'fs';
 
-import { LoggerBuilder } from './logger';
+import { LoggerBuilder, Logger } from './logger';
 import { DataSourceOptionsBuilder } from './orm';
 
 declare global {
     var loggerBuilder: LoggerBuilder;
+    var logger: Logger;
     var packageJson: any;
     var ormBuilder: DataSourceOptionsBuilder;
 }
