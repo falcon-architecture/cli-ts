@@ -3,10 +3,19 @@ import { join } from 'path';
 import inquirer, { Answers, DistinctQuestion } from 'inquirer';
 import axios, { AxiosRequestConfig } from 'axios';
 import { compile } from 'handlebars';
+import shell from 'shelljs';
 
 export class Common {
     public get cwd(): string { return process.cwd(); }
 
+    public exec(command: string): string {
+        let result = shell.exec(command);
+        if (result.code !== 0) {
+            global.logger?.error(`command failed: ${command} with code ${result.code}`);
+            global.logger?.error(result.stderr);
+        }
+        return result.stdout;
+    }
     public getAbsolutePath(path: string): string {
         return join(this.cwd, path);
     }
@@ -18,7 +27,6 @@ export class Common {
         mkdirSync(dirPath, { recursive: true });
         global.logger?.debug(`directory is created at ${dirPath}`);
     }
-
 
     public readFile(path: string): string {
         let data = readFileSync(path, 'utf-8');

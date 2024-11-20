@@ -8,7 +8,7 @@
 6. Read Env variables
 7. SQLite integration using TypeOrm
 8. Handlebar template process
-9. Run cmd using `execa`
+9. Run cmd using `shelljs`
 
 ## 1.1 cli.ts file Usage
 
