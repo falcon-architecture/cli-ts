@@ -5,11 +5,12 @@ const { combine, timestamp, printf, colorize } = format;
 export class LoggerBuilder {
     private _transports: TransportStream[] = [
         new winston.transports.Console({
+            level: 'info',
             format: LoggerBuilder.consoleFormat()
         }),
         new winston.transports.File({
             filename: 'logs/cli.log',
-            level: 'info',
+            level: 'trace',
             format: LoggerBuilder.fileFormat()
         })
     ];
@@ -39,6 +40,10 @@ export class LoggerBuilder {
 
     public transport(...transport: TransportStream[]): this {
         this._transports = transport;
+        return this;
+    }
+    public clearTransport(): this {
+        this._transports = [];
         return this;
     }
 

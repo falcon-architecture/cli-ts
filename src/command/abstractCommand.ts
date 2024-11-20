@@ -101,7 +101,7 @@ export abstract class AbstractCommand extends Common {
             global.logger = global.loggerBuilder
                 .level(logLevel)
                 .build();
-            global.logger.debug(`logger is initialized in ${logLevel} mode`);
+            global.logger.silly(`logger is initialized in ${logLevel} mode`);
         }
         return global.logger;
     }
