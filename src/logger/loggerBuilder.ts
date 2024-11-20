@@ -9,11 +9,11 @@ export class LoggerBuilder {
         }),
         new winston.transports.File({
             filename: 'logs/cli.log',
-            level: 'trace',
+            level: 'silly',
             format: LoggerBuilder.fileFormat()
         })
     ];
-    private _level: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace' = 'info';
+    private _level: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'silly' = 'info';
 
     public static new(): LoggerBuilder {
         return new LoggerBuilder();
@@ -46,7 +46,7 @@ export class LoggerBuilder {
         return this;
     }
 
-    public level(level: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace'): this {
+    public level(level: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'silly'): this {
         this._level = level;
         return this;
     }

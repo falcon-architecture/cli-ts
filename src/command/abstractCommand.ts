@@ -97,11 +97,11 @@ export abstract class AbstractCommand extends Common {
 
     public get logger(): Logger {
         if (!global.logger) {
-            let logLevel: 'trace' | 'info' = this.rootCommand.opts().verbose ? 'trace' : 'info';
+            let logLevel: 'silly' | 'info' = this.rootCommand.opts().verbose ? 'silly' : 'info';
             global.logger = global.loggerBuilder
                 .level(logLevel)
                 .build();
-            global.logger.silly(`logger is initialized in ${logLevel} mode`);
+            global.logger.info(`logger is initialized in ${logLevel} mode`);
         }
         return global.logger;
     }
