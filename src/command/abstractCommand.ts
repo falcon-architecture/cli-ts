@@ -95,6 +95,10 @@ export abstract class AbstractCommand extends Common {
         return currentCommand;
     }
 
+    public findCommand(commandName: string): Command | undefined {
+        return this.rootCommand.commands.find(cmd => cmd.name() === commandName);
+    }
+
     public get logger(): Logger {
         if (!global.logger) {
             let logLevel: 'silly' | 'info' = this.rootCommand.opts().verbose ? 'silly' : 'info';
