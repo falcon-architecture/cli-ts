@@ -17,6 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/natarajanganapathi/falcon.cli.ts.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "test": "node ./dist/cli.js"
