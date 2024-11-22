@@ -17,9 +17,6 @@
     "type": "git",
     "url": "git+https://github.com/natarajanganapathi/falcon.cli.ts.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "scripts": {
     "build": "tsc",
     "test": "node ./dist/cli.js"
