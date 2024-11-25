@@ -13,7 +13,7 @@ The CLI Utility Tool is a powerful and versatile command-line interface designed
 - **Template Rendering with Handlebars**: Render and compile templates for dynamic content generation.
 - **Shell Command Execution with ShellJS**: Execute shell commands within your scripts, enhancing automation.
 - **File Handling**: Perform file read and write operations for data manipulation and storage.
-
+- **Reports Printing**:  Prints reports in a table format in the console.
 ## Installation
 
 To install the CLI Utility Tool, use the following command:
@@ -34,7 +34,7 @@ import { LoggerBuilder } from './loggerBuilder';
 import winston from 'winston';
 
 global.loggerBuilder = LoggerBuilder.new()
-    .addTransport(
+    .transport(
         new winston.transports.Console({
             format: LoggerBuilder.consoleFormat()
         }),
@@ -44,8 +44,8 @@ global.loggerBuilder = LoggerBuilder.new()
             format: LoggerBuilder.fileFormat()
         })
     )
-    .setLevel('debug')
-    .setColors({
+    .level('debug')
+    .colors({
         fatal: 'red',
         error: 'red',
         warn: 'yellow',
@@ -55,9 +55,9 @@ global.loggerBuilder = LoggerBuilder.new()
     });
 
 CommandBuilder.new()
-    .setName("do")
-    .setDescription("A CLI application framework")
-    .setVersion("1.0.0")
+    .name("do")
+    .description("A CLI application framework")
+    .version("1.0.0")
     .build()
     .action(() => {
         let logger = global.loggerBuilder.build();

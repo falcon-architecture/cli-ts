@@ -63,4 +63,8 @@ export class Common {
         global.logger?.debug(`template is read from ${path}`);
         return this.compileTemplate(template, data);
     }
+    
+    public table(data: any[]): void {
+        console.table(data);
+    }
 }
